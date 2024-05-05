@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="../CSS/Order.css">
+</head>
+<body>
+    <h1>Shopping Cart</h1>
+    <button onclick="window.location.href = 'Menu.html';" class="btn">Back to Menu</button>
+    <form method="post">
+        <label for = 'name'>Name</label>
+        <input type="text" id="name" required>
+
+        <label for = 'phone'>Phone</label>
+        <input type="tel" id="phone" required>
+
+        <label for = 'email'>Email</label>
+        <input type="email" id="email" required>
+    </form>
+    <ul id="cart-items-list">
+        <!-- Cart items will be dynamically added here -->
+    </ul>
+    <script src = '../JAVASCRIPT/Order.js'></script>
+    <button class="btn" type = "submit">Submit form</button>
+</body>
+</html>

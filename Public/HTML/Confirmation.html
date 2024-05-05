@@ -6,6 +6,15 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <h1>Order Confirmation</h1>
+    <p>Your order has been submitted successfully!</p>
+    <p2> We will contact you if anything comes up with your order.</p2>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const totalCost = new URLSearchParams(window.location.search).get('totalCost');
+            document.getElementById('totalCost').textContent = totalCost;
+        });
+    </script>
 </body>
 </html>

@@ -280,7 +280,6 @@ form{
                         });
                     })
                     .then(() => {
-                        alert('Thank you for your order! We will contact you shortly if anything comes up with your order.');
                         form.reset(); // Optionally, reset the form after successful submission
                         localStorage.removeItem('cart'); // Clear the cart after successful submission
                         window.location.href = 'Confirmation.html'; // Redirect to the confirmation page

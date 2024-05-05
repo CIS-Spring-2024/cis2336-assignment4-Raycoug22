@@ -33,7 +33,6 @@ const menuItems = [
     { name: 'Water', price: '$1.99', image: '../Images/Menu photo/water.jpg', category: 'Drinks'},
 ];  // Item name, price, descrption, image, and category
 
-
 const cart = [];
 document.addEventListener('DOMContentLoaded', function() {
     const menuContainer = document.getElementById('menu-items');
@@ -150,6 +149,15 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('cart', JSON.stringify(cart));
     }
     function addToCart(item, quantityInput) {
+        let cartItemCount = 0;
+        cart.forEach(cartItem => {
+            cartItemCount += cartItem.quantity;
+        });
+
+        if (cartItemCount >= 5){
+            alert('To many items in cart remove items so total quantity does not exceed 5.');
+            return;
+        }
         const quantity = quantityInput.value.trim(); // Trim any whitespace
         if (quantity === '') {
             alert(`Please enter a quantity for ${item.name}.`);

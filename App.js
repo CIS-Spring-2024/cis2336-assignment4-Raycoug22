@@ -28,13 +28,19 @@ app.post('/calculateTotal', (req, res) => {
 
 app.post('/submitOrder', (req, res) => {
     const formData = req.body;
-    res.sendFile(path.join(__dirname, 'Public', 'HTML', 'Confirmation.html'));
+    const totalCost = formData.totalCost;
+    res.redirect(`/Confirmation?totalCost=${totalCost}`);
 });
 
 app.get('/confirmation', (req, res) => {
+  const totalCost = req.query.totalCost;
   res.sendFile(path.join(__dirname, 'Public', 'HTML', 'Confirmation.html'));
 });
 
+
 app.listen(port, () => {
-    console.log('Server is running on port', port);
+    console.log('Server is running on', port);
 });
+
+
+

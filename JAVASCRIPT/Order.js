@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         let totalCost = 0;
 
+
         // Iterate over each item in the cart
         cart.forEach(item => {
             const orderItemElement = document.createElement('li');
@@ -82,55 +83,59 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCartUI();
 
     // Add event listener for form submission
-    document.getElementById('Order').addEventListener('submit', function(event) {
+    document.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent the default form submission behavior
 
-        // Check if the cart is empty
-        if (cart.length === 0) {
+          // Check if the cart is empty
+          if (cart.length === 0) {
             alert('Your shopping cart is empty. Please add items before submitting your order.');
             return; // Exit the function early if the cart is empty
         }
         
         const form = event.target;
-        const formData = new FormData(form);
+        let isFormValid = true;
 
-        fetch('/calculateTotal', {
-            method: 'POST',
-            body: JSON.stringify({ cart }),
-            headers: {
-                'Content-Type': 'application/json'
+        // Check if any input field is empty
+        form.querySelectorAll('input, textarea').forEach(field => {
+            const label = document.querySelector(`label[for="${field.id}"]`);
+            if (field.value.trim() === '') {
+                isFormValid = false;
+                alert(`${label.textContent} field cannot be left blank.`);
             }
-        })
-        .then(response => response.json())
-        .then(data => {
-            formData.append('totalCost', data.totalCost);
-            return fetch('/submitOrder', {
-                method: 'POST',
-                body: formData
-            });
-        })
-        .then(() => {
+        });
+
+        // Check if any quantity input field is blank or less than or equal to zero
+        form.querySelectorAll('input[type="number"]').forEach(quantityField => {
+            const quantity = parseInt(quantityField.value);
+            if (isNaN(quantity) || quantity <= 0) {
+                isFormValid = false;
+                alert('Quantity must be a valid number greater than zero.');
+            }
+        });
+
+        // Proceed with form submission if form is valid
+        if (isFormValid) {
             alert('Thank you for your order! We will contact you shortly if anything comes up with your order.');
             form.reset(); // Optionally, reset the form after successful submission
-            localStorage.removeItem('cart'); // Clear the cart after successful submission
-            window.location.href = '/confirmation'; // Redirect to the confirmation page
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        }
     });
 
     // Add event listener for input focus
-    document.getElementById('Order').addEventListener('focusin', function(event) {
+    document.querySelector('form').addEventListener('focusin', function(event) {
         if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
             event.target.style.backgroundColor = 'lightblue';
         }
     });
 
     // Add event listener for input blur
-    document.getElementById('Order').addEventListener('focusout', function(event) {
+    document.querySelector('form').addEventListener('focusout', function(event) {
         if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
             event.target.style.backgroundColor = '';
         }
+    });
+
+    // Add event listener for the "Submit form" button
+    document.querySelector('button[type="submit"]').addEventListener('click', function(event) {
+        document.querySelector('form').dispatchEvent(new Event('submit'));
     });
 });

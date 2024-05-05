@@ -1,17 +1,17 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+const port = 4000;
 
-app.use(express.static(path.join(__dirname, 'Public')));
-app.use(express.static('Public'));
+app.use(express.static(path.join(__dirname, 'Public','HTML')));
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'Public/HTML', 'Menu.html'));
+    res.sendFile(path.join(__dirname, 'Public', 'HTML', 'Menu.html'));
 });
 
 app.get('/order', (req, res) => {
-  res.sendFile(path.join(__dirname, 'Public/HTML', 'Order.html'));
+    res.sendFile(path.join(__dirname, 'Public','HTML', 'Order.html'));
 });
 
 app.post('/calculateTotal', (req, res) => {
@@ -28,9 +28,9 @@ app.post('/calculateTotal', (req, res) => {
 
 app.post('/submitOrder', (req, res) => {
     const formData = req.body;
-    res.sendFile(path.join(__dirname, 'Public', 'confirmation.html'));
+    res.sendFile(path.join(__dirname, 'Public', 'HTML', 'confirmation.html'));
 });
 
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+app.listen(port, () => {
+    console.log('Server is running on port', port);
 });

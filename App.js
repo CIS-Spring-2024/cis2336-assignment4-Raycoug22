@@ -28,7 +28,11 @@ app.post('/calculateTotal', (req, res) => {
 
 app.post('/submitOrder', (req, res) => {
     const formData = req.body;
-    res.sendFile(path.join(__dirname, 'Public', 'HTML', 'confirmation.html'));
+    res.sendFile(path.join(__dirname, 'Public', 'HTML', 'Confirmation.html'));
+});
+
+app.get('/confirmation', (req, res) => {
+  res.sendFile(path.join(__dirname, 'Public', 'HTML', 'Confirmation.html'));
 });
 
 app.listen(port, () => {
